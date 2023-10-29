@@ -34,15 +34,17 @@ app.get('/books', (req, res) => {
 })
 
 app.post('/books', (req, res) => {
-    const query = " INSERT into books (`id`, `title`, `description`, `cover`, `status`) VALUES(?)";
+    const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
                    
             
     const values = [
+        cfo002x,
         req.body.id,
         req.body.title,
         req.body.description,
         req.body.cover,
-        req.body.status,     
+        req.body.price,
+        1     
      ]
     
     db.query(query, [values], (err,data)=>{

@@ -19,14 +19,18 @@ const Add = () => {
   }
   const handleClick = async e=>{
     try {
+      await axios.post('http://localhost:8821/books', book)
       waitSWal.fire({
         title:'Data has been added successfully',
         icon:'success'
       })
-       await axios.post('http://localhost:8821/books', book)
       
     } catch (error) {
       console.log(error)
+      waitSWal.fire({
+        title:'Data is error',
+        icon:'error'
+      })
     }
   }
   console.log(book);
@@ -36,8 +40,9 @@ const Add = () => {
       {/* make sure that you create  the value of attribute name is simmilar like you did in the usestate */}
       <input onChange={handleChange} type='text' placeholder='title' name='title' />
       <input onChange={handleChange} type='text' placeholder='desc' name='description' />
-      <input onChange={handleChange} type='number' placeholder='price' name='price' />
       <input onChange={handleChange} type='text' placeholder='cover' name='cover' />
+      <input onChange={handleChange} type='number' placeholder='price' name='price' />
+      {/* <input onChange={handleChange} type='text' placeholder='cover' name='status' /> */}
       <button onClick={handleClick}>Add</button>
     </div>
   )
