@@ -12,6 +12,8 @@ const db = mysql.createConnection({
     database: 'manga_book_shop'
 });
 
+app.use(express.json());
+
 app.get('/', (req, res) => {
     res.json('backend is connected!')
 })
@@ -33,7 +35,13 @@ app.post('/books', (req, res) => {
     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `status`) VALUES(?)";
                    
             
-    const values = ['CFO00X', 'In the house of my parent', 'Have you even see Nazism into your body spirit?', 'NSDAP', 1 ]
+    const values = [
+        req.body.id,
+        req.body.title,
+        req.body.description,
+        req.body.cover,
+        req.body.status,     
+     ]
     
     db.query(query, [values], (err,data)=>{
         if(err){
