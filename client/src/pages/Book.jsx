@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 const Book = () => {
     const [book, setBook] = useState([]);
@@ -30,11 +31,12 @@ const Book = () => {
                            <h1>{data.title}</h1>
                            <p className=''>Manga Description:{data.description}</p>
                            <p className=''>Cover : {data.cover}</p>
-                           <span>{data.price}</span>
+                           <span>Price : {data.price}</span>
                         </div>
-                    ))
+                    )) 
                 }
             </div>
+            <button><Link to="/add">Add new book</Link></button>
         </div>
     )
 }
