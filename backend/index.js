@@ -1,6 +1,8 @@
-import express from 'express'
+import express, { json } from 'express'
 import mysql from 'mysql'
 import cors from 'cors';
+// import uuidv4 from 'uuid/v4'
+
 
 const app = express();
 const date = new Date();
@@ -12,7 +14,7 @@ const db = mysql.createConnection({
     password: '',
     database: 'manga_book_shop'
 });
-
+const idTest = 'test123'
 app.use(express.json());
 app.use(cors())
 
@@ -33,13 +35,34 @@ app.get('/books', (req, res) => {
     })
 })
 
+app.get('/anime', (req, res) => {
+    const query = "SELECT * from anime_data where status =1";
+    db.query(query, (err, data) => {
+        if (err) {
+            console.log('error')
+        }
+        else {
+             if(data !=null){
+                return res.json(data);
+             }
+             else{
+                console.log('no data to display!');
+             }
+        }
+    })
+})
+
+app.post('/anime',(req,res)=>{
+    
+})
+
 app.post('/books', (req, res) => {
     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
 
 
     const values = [
 
-        'CD232DS',
+        idTest,
         req.body.title,
         req.body.description,
         req.body.cover,
