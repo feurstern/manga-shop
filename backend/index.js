@@ -5,7 +5,7 @@ import cors from 'cors';
 const app = express();
 const date = new Date();
 const today = `${date.getDate()} ${date.getMonth()} `;
-console.log('today', date )
+console.log('today', date)
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
@@ -22,7 +22,7 @@ app.get('/', (req, res) => {
 
 //  creating endpoint to get all books
 app.get('/books', (req, res) => {
-    const query = "select * from books"
+    const query = "select * from books where status =1 order by ts_insert ASC"
     db.query(query, (err, data) => {
         if (err) {
             console.log('error')
@@ -35,20 +35,20 @@ app.get('/books', (req, res) => {
 
 app.post('/books', (req, res) => {
     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
-                   
-            
+
+
     const values = [
-        cfo002x,
-        req.body.id,
+
+        'CD232DS',
         req.body.title,
         req.body.description,
         req.body.cover,
         req.body.price,
-        1     
-     ]
-    
-    db.query(query, [values], (err,data)=>{
-        if(err){
+        1
+    ]
+
+    db.query(query, [values], (err, data) => {
+        if (err) {
             return res.json(err)
         }
         else {

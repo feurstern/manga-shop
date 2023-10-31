@@ -4,6 +4,7 @@ import Book from './pages/Book'
 import Add from './pages/Add'
 import Udpdate from './pages/Udpdate'
 import Delete from './pages/Delete'
+import Anime from './pages/Anime'
 
 const App = () => {
   return (
@@ -14,6 +15,7 @@ const App = () => {
         <Route path='/add' element={<Add />}></Route>
         <Route path='/update' element={<Udpdate/>}></Route>
         <Route path='/delete' element={<Delete/>} />
+        <Route path='/anime' element={<Anime/>}/>
       </Routes>
     </BrowserRouter>
       

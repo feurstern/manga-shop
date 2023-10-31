@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import '../index.css'
 
 const Book = () => {
     const [book, setBook] = useState([]);
+    // we have to use effect, so it won't rerender two times
     useEffect(() => {
         const fetchBookData = async () => {
             try {
@@ -31,7 +33,7 @@ const Book = () => {
                            <h1>{data.title}</h1>
                            <p className=''>Manga Description:{data.description}</p>
                            <p className=''>Cover : {data.cover}</p>
-                           <span>Price : {data.price}</span>
+                           <span>Price : {data.price = null ? 'N/A' : data.price}</span>
                         </div>
                     )) 
                 }

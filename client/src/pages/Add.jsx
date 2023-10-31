@@ -6,6 +6,7 @@ import withReactContent from 'sweetalert2-react-content'
 
 const Add = () => {
   const [book, setBook] = useState({
+    id:'',
     title: '',
     description: '',
     price: null,
@@ -38,6 +39,7 @@ const Add = () => {
     <div className='form'>
       <h1>Add new book</h1>
       {/* make sure that you create  the value of attribute name is simmilar like you did in the usestate */}
+      <input onChange={handleChange} type='text' placeholder='id' name='id' />
       <input onChange={handleChange} type='text' placeholder='title' name='title' />
       <input onChange={handleChange} type='text' placeholder='desc' name='description' />
       <input onChange={handleChange} type='text' placeholder='cover' name='cover' />
