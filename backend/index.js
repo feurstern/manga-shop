@@ -42,18 +42,38 @@ app.get('/anime', (req, res) => {
             console.log('error')
         }
         else {
-             if(data !=null){
+            if (data != null) {
                 return res.json(data);
-             }
-             else{
+            }
+            else {
                 console.log('no data to display!');
-             }
+            }
         }
     })
 })
 
-app.post('/anime',(req,res)=>{
-    
+app.post('/anime', (req, res) => {
+    const q = "INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status` , `ts_insert`) VALUES(?)"
+
+    //  post to the server 
+    const values = [
+        req.body.id,
+        req.body.anime_title,
+        req.body.anime_genre,
+        req.body.anime_desc,
+        req.body.status,
+        req.body.ts_insert
+    ]
+
+    db.query(q, [values], (err, data) => {
+        if (err){
+            return res.json(err);
+        }
+        else {
+            return res.json(data);
+        }
+    })
+
 })
 
 app.post('/books', (req, res) => {

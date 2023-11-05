@@ -19,7 +19,15 @@ const Add = () => {
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
   const handleClick = async e=>{
+    console.log('data e', e);
     try {
+      console.log('data book', book.id)
+      if(book.id = null){
+        waitSWal.fire({
+          title:'The book id should not be empty!',
+          icon:'error'
+        })
+      }
       await axios.post('http://localhost:8821/books', book)
       waitSWal.fire({
         title:'Data has been added successfully',
