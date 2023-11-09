@@ -1,8 +1,63 @@
-import React from 'react'
-
+import axios from 'axios'
+import React, { useEffect, useState } from 'react'
+import Swal from 'sweetalert2';
+import withReactContent from 'sweetalert2-react-content';
 const Anime = () => {
-  return (
-    <div>Anime</div>
+  const [anime, setAnime] = useState({
+    id:'',
+    anime_title :'',
+    anime_genre : '',
+    anime_desc :'',
+  });
+
+  const waitSwal = withReactContent(Swal);
+
+  const handleChange = (e)=>{
+    setAnime((prev)=> ({...prev, [e.target.name] : [e.target.value]}))
+  };
+
+
+  const handleClick = async e=>{
+    try {
+      waitSwal.fire({
+        title : 'Data has been submit succesfully',
+        icon : 'success',
+        timerProgressBar : '10'
+      })
+      await axios.post('http://localhost:3000/anime', anime);
+      
+    } catch (error) {
+      waitSwal.fire({
+        title :'Error when try to submit data',
+         icon : 'error'
+      })
+      
+    }
+  }
+
+  console.log(anime)
+  
+
+  useEffect(()=>{
+
+  })
+
+  return ( 
+    <div>
+        <h1>Add new anime</h1>
+        <section>
+          <input onChange={handleChange} placeholder='id' type='text' name='id' id='id'></input>
+          <input onChange={handleChange} placeholder='title' type='text' name='anime_title' id='anime_title'></input>
+          <input onChange={handleChange} placeholder='genre' type='text' name='anime_genre' id='anime_genre'></input>
+          <input onChange={handleChange} placeholder='desc' type='text' name='anime_desc' id='anime_desc'></input>
+        </section>
+
+        <button className='mt-2'type='button' onClick={handleClick}>Submit</button>
+      
+        <>
+          {/* {anime.anime_title} */}
+        </>
+    </div>
   )
 }
 

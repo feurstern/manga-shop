@@ -53,7 +53,7 @@ app.get('/anime', (req, res) => {
 })
 
 app.post('/anime', (req, res) => {
-    const q = "INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status` , `ts_insert`) VALUES(?)"
+    const q = "INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)"
 
     //  post to the server 
     const values = [
@@ -61,8 +61,8 @@ app.post('/anime', (req, res) => {
         req.body.anime_title,
         req.body.anime_genre,
         req.body.anime_desc,
-        req.body.status,
-        req.body.ts_insert
+        1,
+        // req.body.ts_insert
     ]
 
     db.query(q, [values], (err, data) => {
@@ -81,8 +81,7 @@ app.post('/books', (req, res) => {
 
 
     const values = [
-
-        idTest,
+        req.body.id,
         req.body.title,
         req.body.description,
         req.body.cover,

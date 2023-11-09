@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom'
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 
-const Add = () => {
+const AddBook = () => {
   const [book, setBook] = useState({
     id:'',
     title: '',
@@ -58,4 +58,4 @@ const Add = () => {
   )
 }
 
-export default Add
+export default AddBook
