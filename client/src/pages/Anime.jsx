@@ -13,7 +13,7 @@ const Anime = () => {
   const waitSwal = withReactContent(Swal);
 
   const handleChange = (e)=>{
-    setAnime((prev)=> ({...prev, [e.target.name] : [e.target.value]}))
+    setAnime((prev)=> ({...prev, [e.target.name] : e.target.value}))
   };
 
 
@@ -24,7 +24,7 @@ const Anime = () => {
         icon : 'success',
         timerProgressBar : '10'
       })
-      await axios.post('http://localhost:3000/anime', anime);
+      await axios.post('http://localhost:8821/anime', anime);
       
     } catch (error) {
       waitSwal.fire({

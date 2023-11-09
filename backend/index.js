@@ -7,13 +7,16 @@ import cors from 'cors';
 const app = express();
 const date = new Date();
 const today = `${date.getDate()} ${date.getMonth()} `;
+
 console.log('today', date)
+
 const db = mysql.createConnection({
     host: 'localhost',
     user: 'root',
     password: '',
     database: 'manga_book_shop'
 });
+
 const idTest = 'test123'
 app.use(express.json());
 app.use(cors())
@@ -52,50 +55,51 @@ app.get('/anime', (req, res) => {
     })
 })
 
-app.post('/anime', (req, res) => {
-    const q = "INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)"
+// app.post('/anime', (req, res) => {
+//     const query = " INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)";
 
-    //  post to the server 
-    // the current problem that we can't post the fucking data to db
+   
+//     const values = [
+//         generateId,
+//         req.body.anime_title,
+//         req.body.anime_genre,
+//         req.body.anime_desc,
+//         1
+//     ]
+
+//     db.query(query, [values], (err, data) => {
+//         if (err) {
+//             return res.json(err)
+//         }
+//         else {
+//             return res.json(data);
+//         }
+//     })
+
+// })
+
+app.post('/anime', (req, res) => {
+    const query = " INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)";
+
+
+    // we got the major problem that we can't 
     const values = [
-        generateId,
+        generateId(5),
         req.body.anime_title,
         req.body.anime_genre,
         req.body.anime_desc,
-        1,
-        // req.body.ts_insert
+        1
     ]
 
-    db.query(q, [values], (err, data) => {
-        if (err){
-            return res.json(err);
+    db.query(query, [values], (err, data) => {
+        if (err) {
+            return res.json(err)
         }
         else {
             return res.json(data);
         }
     })
-
 })
-
-const getRandomNumber = ()=>{
-    //  this is will get random number 
-    return Math.floor(Math.random() * 1000);
-}
-
-const generateId = (index, length=12) =>{
-    const t = 'abcdefghijklmnopqerstuvwxyz0123456789!#@$%^&*(';
-    let tempId = ''
-    for(let i = 0 ; i<length; i++){
-        tempId+= t[Math.floor(Math.random()  * t.length)]
-    }
-    return tempId;
-        
-}
-
-console.log(`generate uuid  ${generateId()}`);
-
-
-
 
 app.post('/books', (req, res) => {
     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
@@ -120,6 +124,26 @@ app.post('/books', (req, res) => {
         }
     })
 })
+const getRandomNumber = ()=>{
+    //  this is will get random number 
+    return Math.floor(Math.random() * 1000);
+}
+
+const generateId = (index, length=12) =>{
+    const t = 'abcdefghijklmnopqerstuvwxyz0123456789!#@$%^&*(';
+    let tempId = ''
+    for(let i = 0 ; i<length; i++){
+        tempId+= t[Math.floor(Math.random()  * t.length)]
+    }
+    return tempId;
+        
+}
+
+console.log(`generate uuid  ${generateId()}`);
+
+
+
+
 app.listen(8821, () => {
     console.log('connected to the back end!!')
 })
