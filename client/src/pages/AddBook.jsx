@@ -6,43 +6,45 @@ import withReactContent from 'sweetalert2-react-content'
 
 const AddBook = () => {
   const [book, setBook] = useState({
-    id:'',
+    id: '',
     title: '',
     description: '',
     price: null,
     cover: '',
   })
-  const waitSWal =  withReactContent(Swal);
+  const waitSWal = withReactContent(Swal);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
     setBook((prev) => ({ ...prev, [e.target.name]: e.target.value }))
   }
-  const handleClick = async e=>{
+  const handleClick = async e => {
     console.log('data e', e);
     try {
-      console.log('data book', book.id)
-      if(book.id = null){
+      // console.log('data book', book.id)
+
+      book.id = null ? (
         waitSWal.fire({
-          title:'The book id should not be empty!',
-          icon:'error'
+          title: "The id of the book should not be empty!",
+          icon: 'error'
         })
-      }
+      )
+        : 0
       await axios.post('http://localhost:8821/books', book)
       waitSWal.fire({
-        title:'Data has been added successfully',
-        icon:'success'
+        title: 'Data has been added successfully',
+        icon: 'success'
       })
-      
+
     } catch (error) {
       console.log(error)
       waitSWal.fire({
-        title:'Data is error',
-        icon:'error'
+        title: 'Data is error',
+        icon: 'error'
       })
     }
   }
-  console.log(book);
+  console.log('the data:', book);
   return (
     <div className='form'>
       <h1>Add new book</h1>
@@ -54,6 +56,8 @@ const AddBook = () => {
       <input onChange={handleChange} type='number' placeholder='price' name='price' />
       {/* <input onChange={handleChange} type='text' placeholder='cover' name='status' /> */}
       <button onClick={handleClick}>Add</button>
+       
+       {/* showing the result tbat currently beoing use */}
     </div>
   )
 }

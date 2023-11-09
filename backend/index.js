@@ -56,8 +56,9 @@ app.post('/anime', (req, res) => {
     const q = "INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)"
 
     //  post to the server 
+    // the current problem that we can't post the fucking data to db
     const values = [
-        req.body.id,
+        generateId,
         req.body.anime_title,
         req.body.anime_genre,
         req.body.anime_desc,
@@ -76,12 +77,33 @@ app.post('/anime', (req, res) => {
 
 })
 
+const getRandomNumber = ()=>{
+    //  this is will get random number 
+    return Math.floor(Math.random() * 1000);
+}
+
+const generateId = (index, length=12) =>{
+    const t = 'abcdefghijklmnopqerstuvwxyz0123456789!#@$%^&*(';
+    let tempId = ''
+    for(let i = 0 ; i<length; i++){
+        tempId+= t[Math.floor(Math.random()  * t.length)]
+    }
+    return tempId;
+        
+}
+
+console.log(`generate uuid  ${generateId()}`);
+
+
+
+
 app.post('/books', (req, res) => {
     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
 
 
+    // we got the major problem that we can't 
     const values = [
-        req.body.id,
+        generateId(5),
         req.body.title,
         req.body.description,
         req.body.cover,
@@ -103,3 +125,4 @@ app.listen(8821, () => {
 })
 
 //  we have to make different folder to create routes and db configuration
+// for the next development should create another table to the book id
