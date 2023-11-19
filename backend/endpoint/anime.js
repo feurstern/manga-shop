@@ -1,3 +1,4 @@
+
 app.post('/anime', (req, res) => {
     const query = " INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)";
 

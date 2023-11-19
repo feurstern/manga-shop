@@ -101,29 +101,30 @@ app.post('/anime', (req, res) => {
 //     })
 // })
 
-// app.post('/books', (req, res) => {
-//     const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
+app.post('/books', (req, res) => {
+    const query = " INSERT into books (`id`, `title`, `description`, `cover`, `price`, `status`) VALUES(?)";
 
 
-//     // we got the major problem that we can't 
-//     const values = [
-//         generateId(5),
-//         req.body.title,
-//         req.body.description,
-//         req.body.cover,
-//         req.body.price,
-//         1
-//     ]
+    // we got the major problem that we can't 
+    const values = [
+        generateId(5),
+        req.body.title,
+        req.body.description,
+        req.body.cover,
+        req.body.price,
+        1
+    ]
 
-//     db.query(query, [values], (err, data) => {
-//         if (err) {
-//             return res.json(err)
-//         }
-//         else {
-//             return res.json(data);
-//         }
-//     })
-// })
+    db.query(query, [values], (err, data) => {
+        if (err) {
+            return res.json(err)
+        }
+        else {
+            return res.json(data);
+        }
+    })
+})
+
 const getRandomNumber = ()=>{
     //  this is will get random number 
     return Math.floor(Math.random() * 1000);
@@ -141,6 +142,19 @@ const generateId = (index, length=12) =>{
 
 console.log(`generate uuid  ${generateId()}`);
 
+app.delete('books/:id', (req,res)=>{
+    const bookId = req.params.id;
+
+    const q = " DELETE from books where id = ? "
+    db.query(q, [bookId], (err,data)=>{
+        if(err){
+            return res.json(err)
+        }
+        else{
+            return res.json(data)
+        }
+    })
+})
 
 
 
