@@ -30,7 +30,7 @@ app.get('/books', (req, res) => {
     const query = "select * from books where status =1 order by ts_insert ASC"
     db.query(query, (err, data) => {
         if (err) {
-            console.log('error')
+            console.log('get book is error')
         }
         else {
             return res.json(data)
@@ -42,7 +42,7 @@ app.get('/anime', (req, res) => {
     const query = "SELECT * from anime_data where status =1";
     db.query(query, (err, data) => {
         if (err) {
-            console.log('error')
+            console.log('get anime is error')
         }
         else {
             if (data != null) {
@@ -58,7 +58,7 @@ app.get('/anime', (req, res) => {
 app.post('/anime', (req, res) => {
     const query = " INSERT into anime_data (`id`, `anime_title`, `anime_genre`, `anime_desc`, `status`) VALUES(?)";
 
-   
+
     const values = [
         generateId(5),
         req.body.anime_title,
@@ -125,32 +125,33 @@ app.post('/books', (req, res) => {
     })
 })
 
-const getRandomNumber = ()=>{
+const getRandomNumber = () => {
     //  this is will get random number 
     return Math.floor(Math.random() * 1000);
 }
 
-const generateId = (index, length=12) =>{
+const generateId = (index, length = 12) => {
     const t = 'abcdefghijklmnopqerstuvwxyz0123456789!#@$%^&*(';
     let tempId = ''
-    for(let i = 0 ; i<length; i++){
-        tempId+= t[Math.floor(Math.random()  * t.length)]
+    for (let i = 0; i < length; i++) {
+        tempId += t[Math.floor(Math.random() * t.length)]
     }
     return tempId;
-        
+
 }
 
 console.log(`generate uuid  ${generateId()}`);
 
-app.delete('books/:id', (req,res)=>{
+app.delete('books/:id', (req, res) => {
     const bookId = req.params.id;
 
+
     const q = " DELETE from books where id = ? "
-    db.query(q, [bookId], (err,data)=>{
-        if(err){
+    db.query(q, [bookId], (err, data) => {
+        if (err) {
             return res.json(err)
         }
-        else{
+        else {
             return res.json(data)
         }
     })

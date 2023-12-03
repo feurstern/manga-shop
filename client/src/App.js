@@ -5,6 +5,7 @@ import AddBook from './pages/AddBook'
 import Udpdate from './pages/Udpdate'
 import Delete from './pages/Delete'
 import Anime from './pages/Anime'
+import ShowAnime from './pages/ShowAnime'
 
 const App = () => {
   return (
@@ -16,6 +17,7 @@ const App = () => {
         <Route path='/update' element={<Udpdate/>}></Route>
         <Route path='/delete' element={<Delete/>} />
         <Route path='/anime' element={<Anime/>}/>
+        <Route path='/show_anime' element={<ShowAnime/>}></Route>
       </Routes>
     </BrowserRouter>
       

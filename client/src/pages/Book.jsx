@@ -5,6 +5,7 @@ import '../index.css'
 import '../style.css'
 import Swal from 'sweetalert2';
 import withReactContent from 'sweetalert2-react-content';
+import EventNotFound from './EventNotFound'
 
 const Book = () => {
     const [book, setBook] = useState([]);
@@ -54,26 +55,27 @@ const Book = () => {
             showDenyButton: true,
             denyButtonText: 'Cancel'
         })
-            .then( async (res) => {
-                if(res.isConfirmed){
+            .then(async (res) => {
+                if (res.isConfirmed) {
                     try {
-                        await axios.delete('http://localhost:8821/books/'+id)
+                        await axios.delete('http://localhost:8821/books/' + id)
                         swalModal.fire({
-                            title:'Success',
-                            text : `The book with title ${title} has been delete succesfully`,
-                            icon : 'success'
-                        })
+                            title: 'Success',
+                            text: `The book with title ${title} has been delete succesfully`,
+                            icon: 'success'
+                        }) 
+                        window.location.reload()
                     } catch (error) {
 
                         swalModal.fire({
-                            title :'failed',
+                            title: 'failed',
                             text: 'Error when trying to delete the book',
-                            icon:'error'
+                            icon: 'error'
                         })
-                        
+
                     }
                 }
-                if(res.isDenied){
+                if (res.isDenied || res.isDismissed) {
                     swalModal.fire({
                         text: 'Cancelled',
                         icon: 'error'
@@ -81,26 +83,37 @@ const Book = () => {
                 }
             })
     }
-    return (
-        <div className='App'>
-            <h1>Hatsune Miku Manga Shop</h1>
-            <div className='books'>
-                {
-                    book.map(data => (
-                        <div className='mt-2 book bg-red-600 show-book' key={data.id}>
-                            <h1>{data.title}</h1>
-                            <p className=''>Manga Description:{data.description}</p>
-                            <p className=''>Cover : {data.cover}</p>
-                            <span>Price : {data.price = null ? 'N/A' : data.price}</span>
-                            <button className='update' onClick={updateButton}>Update</button>
-                            <button className='delete' onClick={()=>deleteBook(data.id, data.title)}>delete</button>
-                        </div>
-                    ))
-                }
+    if (book.length > 0) {
+        return (
+            <div className='App'>
+                <h1>Hatsune Miku Manga Shop</h1>
+                <div className='books'>
+                    {
+                        book.map(data => (
+                            <div className='mt-2 book bg-red-600 show-book' key={data.id}>
+                                <h1>{data.title}</h1>
+                                <p className=''>Manga Description:{data.description}</p>
+                                <p className=''>Cover : {data.cover}</p>
+                                <span>Price : {data.price = null ? 'N/A' : data.price}</span>
+                                <button className='update' onClick={updateButton}>Update</button>
+                                <button className='delete' onClick={() => deleteBook(data.id, data.title)}>delete</button>
+                            </div>
+                        ))
+                    }
+                </div>
+                <button><Link to="/add">Add new book</Link></button>
             </div>
-            <button><Link to="/add">Add new book</Link></button>
-        </div>
-    )
+        )
+    }
+
+    else{
+        return(
+            <div className='App'>
+               <EventNotFound/>
+            </div>
+        )
+    }
+
 }
 
 export default Book
